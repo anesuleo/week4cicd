@@ -16,16 +16,29 @@ public class ProductController {
         productList.add(new Product("101", "Radio", "Eelctric", 399));
     }
 
+
     @GetMapping("/getProducts")
     public List<Product> getProduct(){
         return productList;
     }
 
-    @PostMapping("addProduct")
+    @PostMapping("/addProduct")
         public ResponseEntity<List> addProduct(@RequestBody Product product){
         productList.add(product);
         return ResponseEntity.ok(productList);
     }
 
+    @PutMapping("/updateProduct/{id}")
+    public ResponseEntity<List> updateProduct(@PathVariable String id, @RequestBody Product product){
+        for (Product p : productList){
+            if(p.getId().equals(id)){
+                p.setName(product.getName());
+                p.setCategory(product.getCategory());
+                p.setPrice(product.getPrice());
+                return ResponseEntity.ok(productList);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }
