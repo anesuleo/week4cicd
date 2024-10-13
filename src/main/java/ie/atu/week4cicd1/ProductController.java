@@ -41,4 +41,14 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
+    @DeleteMapping("/deleteProduct/{id}")
+    public ResponseEntity<List> deleteProduct(@PathVariable String id) {
+        for (Product p : productList){
+            if(p.getId().equals(id)){
+                productList.remove(p);
+            }
+        }
+        return ResponseEntity.ok(productList);
+    }
+
 }
